@@ -409,5 +409,4 @@ class TestTextToTextNodes(unittest.TestCase):
         text = "**"
         actual = text_to_textnodes(text)
         print("\nhi ", actual)
-        expected = []
-        # self.assertEqual(actual, expected)
+        self.assertEqual(actual, [])
