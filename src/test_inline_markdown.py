@@ -90,6 +90,22 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         actual = split_nodes_delimiter(old_nodes, "*", TextType.ITALIC)
         self.assertEqual(actual, old_nodes)
 
+    def test_split_nodes_delimiter_for_italic_with_bold(self):
+        old_nodes = [
+            TextNode(
+                "Here is some *italic* text and **bold** and **more bold** text and *more italic text*",
+                TextType.TEXT,
+            ),
+        ]
+        actual = split_nodes_delimiter(old_nodes, "*", TextType.ITALIC)
+        expected = [
+            TextNode("Here is some ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" text and **bold** and **more bold** text and ", TextType.TEXT),
+            TextNode("more italic text", TextType.ITALIC),
+        ]
+        self.assertEqual(actual, expected)
+
 
 class TestInlineMarkdownBootDevCases(unittest.TestCase):
     def test_delim_bold(self):

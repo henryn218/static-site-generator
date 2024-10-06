@@ -25,7 +25,7 @@ def split_node_text_delimiter(
 
     text_split = split_text(text, delimiter)
 
-    if text_split[0] != "":
+    if text_split and text_split[0] != "":
         text_nodes.append(
             TextNode(
                 text_split[0], text_type if inside_delimiter_pair else TextType.TEXT
@@ -53,6 +53,8 @@ def split_text(text, delimiter):
                 ) and delimiter_count < 2:
                     break_position = i + 1
                     break
+                if delimiter_count > 1:
+                    delimiter_count = 0
             substring_one += character
         else:
             break_position = len(text)
