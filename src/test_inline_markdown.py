@@ -1,6 +1,10 @@
 import unittest
 
-from inline_markdown import split_nodes_delimiter
+from inline_markdown import (
+    split_nodes_delimiter,
+    extract_markdown_images,
+    extract_markdown_links,
+)
 from textnode import TextNode, TextType
 
 
@@ -186,3 +190,47 @@ class TestInlineMarkdownBootDevCases(unittest.TestCase):
             ],
             new_nodes,
         )
+
+
+class TestExtractMarkdownImages(unittest.TestCase):
+    def test_extract_markdown_images(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        actual = extract_markdown_images(text)
+        expected = [
+            ("rick roll", "https://i.imgur.com/aKaOqIh.gif"),
+            ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg"),
+        ]
+        self.assertEqual(actual, expected)
+
+    def test_extract_markdown_images_with_no_images(self):
+        text = "This is text with no images"
+        actual = extract_markdown_images(text)
+        self.assertEqual(actual, [])
+
+    def test_extract_markdown_images_with_malformed_markdown(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg"
+        actual = extract_markdown_images(text)
+        expected = [("rick roll", "https://i.imgur.com/aKaOqIh.gif")]
+        self.assertEqual(actual, expected)
+
+
+class TestExtractMarkdownLinks(unittest.TestCase):
+    def test_extract_markdown_images(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        actual = extract_markdown_links(text)
+        expected = [
+            ("to boot dev", "https://www.boot.dev"),
+            ("to youtube", "https://www.youtube.com/@bootdotdev"),
+        ]
+        self.assertEqual(actual, expected)
+
+    def test_extract_markdown_images_with_no_links(self):
+        text = "This is text with no links"
+        actual = extract_markdown_links(text)
+        self.assertEqual(actual, [])
+
+    def test_extract_markdown_links_with_malformed_markdown(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube]https://www.youtube.com/@bootdotdev)"
+        actual = extract_markdown_links(text)
+        expected = [("to boot dev", "https://www.boot.dev")]
+        self.assertEqual(actual, expected)

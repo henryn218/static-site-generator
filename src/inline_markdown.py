@@ -1,3 +1,4 @@
+import re
 from textnode import TextNode, TextType
 
 
@@ -66,3 +67,11 @@ def split_text(text, delimiter):
 
 def is_valid_markdown(text, delimiter):
     return not bool(text.count(delimiter) % 2)
+
+
+def extract_markdown_images(text):
+    return re.findall(r"!\[([^\]]*)\]\(([^\)]*)\)", text)
+
+
+def extract_markdown_links(text):
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
