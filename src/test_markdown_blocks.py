@@ -31,7 +31,6 @@ class TestBlockMarkdown(unittest.TestCase):
             This is a paragraph of text. It has some **bold** and *italic* words inside of it.
 
 
-
             * This is the first list item in a list block\n* This is a list item\n* This is another list item
             """
         )
@@ -49,3 +48,10 @@ class TestBlockMarkdown(unittest.TestCase):
     def test_markdown_to_blocks_with_no_line_breaks(self):
         actual = markdown_to_blocks("hello world")
         self.assertEqual(actual, ["hello world"])
+
+    def test_single_block(self):
+        actual = markdown_to_blocks(
+            "This is a single block\nwith multiple lines\nbut no empty lines"
+        )
+        expected = ["This is a single block\nwith multiple lines\nbut no empty lines"]
+        self.assertEqual(actual, expected)
