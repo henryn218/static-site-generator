@@ -408,5 +408,4 @@ class TestTextToTextNodes(unittest.TestCase):
     def test_text_to_textnodes_with_empty_format_delimiters(self):
         text = "**"
         actual = text_to_textnodes(text)
-        print("\nhi ", actual)
         self.assertEqual(actual, [])
