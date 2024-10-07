@@ -73,6 +73,11 @@ class TestBlockMarkdown(unittest.TestCase):
     def test_block_to_block_type_with_paragraph(self):
         self.assertEqual(block_to_block_type("here is some text"), "paragraph")
 
+    def test_block_to_block_type_with_quote(self):
+        self.assertEqual(
+            block_to_block_type(">here is some text\n>that is quoted"), "quote"
+        )
+
     def test_block_to_block_type_with_incomplete_list(self):
         actual = block_to_block_type(
             "This is the first list item in an attempted list block\n2. This is a list item\n3. This is another list item",
