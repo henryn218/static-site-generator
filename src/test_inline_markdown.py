@@ -409,3 +409,8 @@ class TestTextToTextNodes(unittest.TestCase):
         text = "**"
         actual = text_to_textnodes(text)
         self.assertEqual(actual, [])
+
+    def test_text_to_textnodes_with_italic_at_end_of_line(self):
+        text = "*test test test*"
+        actual = text_to_textnodes(text)
+        self.assertEqual(actual, [TextNode("test test test", TextType.ITALIC)])
