@@ -100,7 +100,7 @@ def strip_unordered_list_marker(lines):
     else:
         raise ValueError("Unordered lists must use '-' or '*' to indicate list items")
 
-    return (text.strip(list_marker) for text in lines)
+    return (text.lstrip(list_marker) for text in lines)
 
 
 def text_to_children(text):
